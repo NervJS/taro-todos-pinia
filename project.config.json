@@ -1,0 +1,15 @@
+{
+  "miniprogramRoot": "./dist",
+  "projectname": "taro-todos-pinia",
+  "description": "Todo App",
+  "appid": "touristappid",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "enhance": false,
+    "postcss": false,
+    "compileHotReLoad": false,
+    "minified": false
+  },
+  "compileType": "miniprogram"
+}
