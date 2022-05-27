@@ -1,17 +1,19 @@
 <template>
   <view class="todoapp">
     <Header />
-    <!-- <MainSection /> -->
+    <MainSection />
   </view>
 </template>
 
 <script lang="ts">
 import Header from '@/components/Header.vue'
+import MainSection from '@/components/MainSection.vue'
 
 export default {
   name: 'Index',
   components: {
-    Header
+    Header,
+    MainSection
   }
 }
 </script>

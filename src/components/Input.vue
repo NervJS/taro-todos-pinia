@@ -1,24 +1,41 @@
 <template>
   <view class="textinput-wrap">
-    <text class="textinput-wrap-icon">❯</text>
+    <text @tap="compeleteAllTodos" class="textinput-wrap-icon">❯</text>
     <view class="textinput-wrap-input">
       <input
         class="new-todo"
         type="text"
         placeholder="What needs to be done?"
-        :autofocus="true"
-        confirmtype="done"
+        :focus="true"
+        confirm-type="done"
+        v-model="value"
+        @keydown="handleKeyDown"
+        @confirm="handleSubmit"
       />
     </view>
   </view>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { useTodosStore } from '@/stores/todos'
 
 export default defineComponent({
   setup () {
+    const value = ref('')
+    const { compeleteAllTodos, addTodo } = useTodosStore()
 
+    function handleSubmit (e) {
+      const newTodo = e.detail.value.trim()
+      addTodo(newTodo)
+      value.value = ''
+    }
+
+    return {
+      value,
+      compeleteAllTodos,
+      handleSubmit
+    }
   }
 })
 </script>

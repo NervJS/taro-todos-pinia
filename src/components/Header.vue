@@ -14,8 +14,6 @@ import Filters from './Filters.vue'
 import ContentInput from './Input.vue'
 
 export default defineComponent({
-  setup() {
-  },
   components: {
     Filters,
     ContentInput
@@ -35,6 +33,7 @@ export default defineComponent({
 .header-title-wrap {
   display: flex;
   background-color: #F5F5F5;
+  padding-top: 120px;
 }
 
 .textinput-wrap {

@@ -1,8 +1,41 @@
 import { defineStore } from 'pinia'
 
-export const useTodosStore = defineStore<'todos'>('todos', {
+type Filter = 'all' | 'active' | 'compeleted'
+
+interface Todo {
+  content: string,
+  type: Filter
+}
+
+interface State {
+  todos: Todo[]
+  filter: Filter
+}
+
+type Getters = {
+  filteredTodos(): Todo[]
+  todosCount(): {
+    total: number
+    active: number
+    compeleted: number
+  }
+}
+
+interface Action {
+  addTodo(content: string): void
+  changeTodo(content: string, idx: number): void
+  toggleTodo(idx: number): void
+  compeleteAllTodos(): void
+  removeCompeletedTodos(): void
+  setFilter(current: Filter): void
+}
+
+export const useTodosStore = defineStore<'todos', State, Getters, Action>('todos', {
   state: () => ({
-    todos: [],
+    todos: [{
+      content: 'Use Pinia',
+      type: 'active'
+    }],
     filter: 'all'
   }),
   getters: {
@@ -15,6 +48,16 @@ export const useTodosStore = defineStore<'todos'>('todos', {
         case 'all':
         default:
           return this.todos
+      }
+    },
+    todosCount () {
+      const todos = this.todos
+      const activeCount = todos.filter(item => item.type === 'active').length
+      const total = todos.length
+      return {
+        total,
+        active: activeCount,
+        compeleted: total - activeCount
       }
     }
   },
@@ -29,7 +72,15 @@ export const useTodosStore = defineStore<'todos'>('todos', {
       this.todos[idx].content = content
     },
     toggleTodo (idx) {
-      this.todos[idx].type === 'active' ? 'compeleted' : 'active'
+      const todo = this.todos[idx]
+      todo.type = todo.type === 'active' ? 'compeleted' : 'active'
+    },
+    compeleteAllTodos () {
+      const todos = this.todos
+      const isAllCompeleted = todos.filter(todo => todo.type !== 'compeleted').length === 0
+      this.todos.forEach(todo => {
+        todo.type = isAllCompeleted ? 'active' : 'compeleted'
+      })
     },
     removeCompeletedTodos () {
       this.todos = this.todos.filter(item => item.type === 'active')

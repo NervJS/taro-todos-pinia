@@ -17,7 +17,7 @@ export default defineComponent({
   setup() {
     const store = useTodosStore()
     const { filter } = storeToRefs(store)
-    const filters = reactive(['all', 'active', 'completed'])
+    const filters = reactive(['all', 'active', 'compeleted'])
 
     function onSelected (current) {
       store.setFilter(current)
